@@ -17,11 +17,13 @@
 	</header>
 	<section>
 		<h2>@ViewBag.Title</h2>
-		@RenderBody()
 	</section>
+	@RenderBody()
 	<footer>Copyright 2023 Dutch Treat</footer>
 
 	<script src="~/lib/jquery/dist/jquery.js"></script>
 	<script src="~/js/index.js"></script>
+
+	@RenderSection("Scripts", false)
 </body>
 </html>
