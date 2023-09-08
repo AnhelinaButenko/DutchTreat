@@ -9,13 +9,14 @@ namespace DutchTreatHW.Data;
 
 public class DutchSeeder
 {
+    // need save or read data from DutchContext
     private readonly DutchContext _ctx;
-    private readonly IWebHostEnvironment _env;
+    private readonly IWebHostEnvironment _hosting;
 
-    public DutchSeeder(DutchContext ctx, IWebHostEnvironment env)
+    public DutchSeeder(DutchContext ctx, IWebHostEnvironment hosting)
     {
         _ctx = ctx;
-        _env = env;
+        _hosting = hosting;
     }
 
     public void Seed()
@@ -25,28 +26,25 @@ public class DutchSeeder
         if (! _ctx.Products.Any())
         {
             // Need to create sample data
-            var filePath = Path.Combine("Data/art.json");
+            var filePath = Path.Combine(_hosting.ContentRootPath, "Data/art.json");
             var json = File.ReadAllText(filePath);
             var products = JsonSerializer.Deserialize<IEnumerable<Product>>(json);
 
-            _ctx.AddRange(products);
+            _ctx.Products.AddRange(products);
 
-            var order = new Order()
+            var order = _ctx.Orders.Where(o => o.Id == 1).FirstOrDefault();
+            if (order != null)
             {
-                OrderDate = System.DateTime.Today,
-                OrderNumber = "10000",
-                Items = new List<OrderItem>()
+                order.Items = new List<OrderItem>()
                 {
                     new OrderItem()
-                    {
+                    {   
                         Product = products.First(),
                         Quantity = 5,
-                        UnitPrice = products.First().Price,
+                        UnitPrice = products.First().Price
                     }
-                }
-            };
-
-            _ctx.Add(order);
+                };
+            }
 
             _ctx.SaveChanges();
         }

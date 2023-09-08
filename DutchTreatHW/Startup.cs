@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -15,6 +16,13 @@ namespace DutchTreatHW;
 
 public class Startup
 {
+    private readonly IConfiguration _config;
+
+    public Startup(IConfiguration config)
+    {
+        _config = config;
+    }
+
     // This method gets called by the runtime. Use this method to add services to the container.
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
@@ -22,6 +30,10 @@ public class Startup
         services.AddDbContext<DutchContext>();
 
         services.AddTransient<INullMailService, NullMailService>();
+
+        services.AddTransient<DutchSeeder>();
+
+        services.AddScoped<IDutchRepository, DutchRepository>();
 
         services.AddControllersWithViews()
             .AddRazorRuntimeCompilation();
@@ -38,6 +50,7 @@ public class Startup
         }
         else
         {
+            // Add Error Page
             app.UseExceptionHandler("/error");
         }
 
@@ -49,9 +62,11 @@ public class Startup
         {
             cfg.MapRazorPages();
 
-            cfg.MapControllerRoute("Default",
+            cfg.MapControllerRoute("Fallback",
             "/{controller}/{action}/{id?}",
             new { controller = "App", action = "Index" });
+
+            cfg.MapRazorPages();
         });
     }
 }

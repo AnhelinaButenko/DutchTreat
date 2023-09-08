@@ -4,5 +4,11 @@
 	},
 	"ConnectionStrings": {
 		"DutchContextDb": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DutchTreatHW;Integrated Security=True;Connect Timeout=30; MultipleActiveResultSets=true"
+	},
+	"Logging": {
+		"LogLevel": {
+			"Default": "Information",
+			"Microsoft": "Warning"
+		}
 	}
 }
