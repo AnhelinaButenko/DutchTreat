@@ -14,5 +14,5 @@ public class ContactViewModel
     public string Subject { get; set; }
     [Required]
     [MaxLength(250, ErrorMessage = "Too Long")]
-		public string Message { get; set; }
+	public string Message { get; set; }
 }

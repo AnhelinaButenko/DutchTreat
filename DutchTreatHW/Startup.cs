@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace DutchTreatHW;
@@ -33,10 +34,13 @@ public class Startup
 
         services.AddTransient<DutchSeeder>();
 
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
         services.AddScoped<IDutchRepository, DutchRepository>();
 
         services.AddControllersWithViews()
-            .AddRazorRuntimeCompilation();
+            .AddRazorRuntimeCompilation()
+            .AddNewtonsoftJson(cfg => cfg.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
         services.AddRazorPages();
     }
