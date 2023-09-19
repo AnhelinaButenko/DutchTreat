@@ -1,10 +1,11 @@
 ﻿using DutchTreatHW.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace DutchTreatHW.Data;
 
-public class DutchContext : DbContext
+public class DutchContext : IdentityDbContext<StoreUser>
 {
 	private readonly IConfiguration _config;
 

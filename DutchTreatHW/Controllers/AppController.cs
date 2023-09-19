@@ -1,6 +1,7 @@
 ﻿using DutchTreatHW.Data;
 using DutchTreatHW.Services;
 using DutchTreatHW.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -48,6 +49,7 @@ public class AppController : Controller
         return View();
     }
 
+    [Authorize]
     public IActionResult Shop()
     {
         var results = _repository.GetAllProducts();
