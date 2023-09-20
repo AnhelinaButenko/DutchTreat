@@ -35,8 +35,8 @@ public class DutchSeeder
             {
                 FirstName = "Shawn",
                 LastName = "Wildermuch",
-                Email = "Shawn@dutchtreat.com",
-                UserName = "shawn@dutchtreat.com"
+                Email = "shawn@dutchthreat.com",
+                UserName = "shawn@dutchthreat.com"
             };
 
             var result = await _userManager.CreateAsync(user, "P@ssw0rd!");
