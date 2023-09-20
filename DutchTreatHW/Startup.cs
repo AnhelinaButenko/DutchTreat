@@ -36,6 +36,9 @@ public class Startup
         })
             .AddEntityFrameworkStores<DutchContext>();
 
+        services.AddAuthentication()
+            .AddCookie()
+            .AddJwtBearer();
 
         services.AddDbContext<DutchContext>();
 
@@ -73,7 +76,7 @@ public class Startup
 
         app.UseAuthentication();
 
-        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.UseEndpoints(cfg =>
         {
