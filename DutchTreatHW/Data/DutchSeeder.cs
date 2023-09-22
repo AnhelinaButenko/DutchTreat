@@ -39,7 +39,7 @@ public class DutchSeeder
                 UserName = "shawn@dutchthreat.com"
             };
 
-            var result = await _userManager.CreateAsync(user, "P@ssw0rd!");
+            var result = await _userManager.CreateAsync(user, "с");
 
             if (result != IdentityResult.Success)
             {

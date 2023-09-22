@@ -3,17 +3,13 @@ using DutchTreatHW.Data.Entities;
 using DutchTreatHW.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
-using System.Threading.Tasks;
+using System.Text;
 
 namespace DutchTreatHW;
 
@@ -38,7 +34,15 @@ public class Startup
 
         services.AddAuthentication()
             .AddCookie()
-            .AddJwtBearer();
+            .AddJwtBearer(cfg =>
+			{
+				cfg.TokenValidationParameters = new TokenValidationParameters()
+				{
+					ValidIssuer = _config["Tokens:Issuer"],
+					ValidAudience = _config["Tokens:Audience"],
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]))
+				};
+			});
 
         services.AddDbContext<DutchContext>();
 
